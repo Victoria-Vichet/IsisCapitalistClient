@@ -11,7 +11,7 @@ export class RestserviceService {
 
   constructor(private http: HttpClient) { }
 
-  get user(): string {
+  getUser(): string {
     return this.#user;
   }
 

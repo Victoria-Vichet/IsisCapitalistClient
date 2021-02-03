@@ -11,10 +11,11 @@ export class AppComponent {
   title = 'IsisCapitalistClient';
   world: World = new World();
   server: string;
-
+  user: string;
 
   constructor(private service: RestserviceService) {
     this.server = service.getServer();
+    this.user = service.getUser();
     service.getWorld().then(
       world => {
         this.world = world;
