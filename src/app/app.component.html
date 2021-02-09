@@ -1,7 +1,7 @@
 <div class="header">
   <span><img [attr.src]="server+world.logo" /> </span>
   <span id="worldname"> {{world.name}} </span>
-  <span id="money"> {{world.money}} </span>
+  <span [innerHTML]="world.money | bigvalue"></span>
   <div> multiplicateur </div>
   <span id="user"> {{user}} </span>
 </div>
