@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductComponent } from './product/product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BigvaluePipe } from './bigvalue.pipe';
+import {MatProgressBarModule} from '@angular/material/progress-bar'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { BigvaluePipe } from './bigvalue.pipe';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
