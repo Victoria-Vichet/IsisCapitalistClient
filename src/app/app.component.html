@@ -9,7 +9,7 @@
   <div> liste des boutons de menu </div>
   <div class="product">
     <app-product [prod]="world.products.product[0]"
-                 class="product col-md-6"></app-product>
+                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
     <app-product [prod]="world.products.product[1]"
                  class="product col-md-6"></app-product>
     <app-product [prod]="world.products.product[2]"

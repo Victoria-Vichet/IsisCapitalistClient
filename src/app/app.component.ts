@@ -21,4 +21,11 @@ export class AppComponent {
         this.world = world;
       });
   }
+
+  // tslint:disable-next-line:typedef
+  onProductionDone(p: Product) {
+    this.world.money += p.revenu;
+    this.world.score += p.revenu;
+  }
+
 }

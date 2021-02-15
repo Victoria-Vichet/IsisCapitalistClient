@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Product, World} from '../world';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Product} from '../world';
 import { RestserviceService } from '../restservice.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { RestserviceService } from '../restservice.service';
 export class ProductComponent implements OnInit {
 
   server: string;
-  world: World;
   product: Product;
   progressBarValue: number;
   lastupdate: number;
@@ -20,12 +19,11 @@ export class ProductComponent implements OnInit {
     this.product = value;
   }
 
+  @Output()
+  notifyProduction: EventEmitter<Product> = new EventEmitter<Product>();
+
   constructor(private service: RestserviceService) {
     this.server = service.getServer();
-    service.getWorld().then(
-      world => {
-        this.world = world;
-      });
     this.progressBarValue = 0;
   }
 
@@ -34,15 +32,21 @@ export class ProductComponent implements OnInit {
   }
 
   startFabrication(): void{
+    this.product.timeleft = this.product.vitesse;
+    this.lastupdate = Date.now();
   }
 
   calcScore(): void{
-    this.lastupdate = Date.now();
-    if ((this.product.timeleft - 100) > 0){
-      this.product.timeleft -= 100;
-    }else{
-      this.world.money += this.product.revenu;
-      this.progressBarValue = 0;
+    if (!(this.product.timeleft !== 0)){
+      if (this.product.timeleft > (Date.now() - this.lastupdate)){
+        this.product.timeleft -= Date.now() - this.lastupdate;
+        this.progressBarValue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse * 100);
+      }else{
+        this.product.timeleft = 0;
+        this.notifyProduction.emit(this.product);
+        this.progressBarValue = 0;
+      }
     }
+
   }
 }
