@@ -13,10 +13,23 @@ export class ProductComponent implements OnInit {
   product: Product;
   progressBarValue: number;
   lastupdate: number;
+  qtMulti: string;
+  money: number;
 
   @Input()
   set prod(value: Product) {
     this.product = value;
+  }
+
+  @Input()
+  set qtmulti(value: string){
+    this.qtMulti = value;
+    if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
+  }
+
+  @Input()
+  set moneyWorld(value: number){
+    this.money = value;
   }
 
   @Output()
@@ -47,6 +60,10 @@ export class ProductComponent implements OnInit {
         this.progressBarValue = 0;
       }
     }
+  }
+
+  calcMaxCanBuy(): void{
+    // on ne déclare pas de nouvelles variable et on ne retourne rien car on va modifier directement le cout du produit
 
   }
 }

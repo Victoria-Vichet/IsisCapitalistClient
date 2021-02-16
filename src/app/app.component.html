@@ -2,16 +2,18 @@
   <span><img [attr.src]="server+world.logo" /> </span>
   <span id="worldname"> {{world.name}} </span>
   <span [innerHTML]="world.money | bigvalue"></span>
-  <div> multiplicateur </div>
+  <div (click)="clicMultipli()"> multiplicateur </div>
   <span id="user"> {{user}} </span>
 </div>
 <div class="main">
   <div> liste des boutons de menu </div>
   <div class="product">
     <app-product [prod]="world.products.product[0]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
+                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                 [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
     <app-product [prod]="world.products.product[1]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
+                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                  [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
     <!--
     <app-product [prod]="world.products.product[2]"
                  class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
