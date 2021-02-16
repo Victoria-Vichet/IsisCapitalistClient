@@ -1,7 +1,6 @@
 <div>
   <span id="id"> {{product.id}} </span>
   <span id="name"> {{product.name}}</span>
-  <button (click)="startFabrication()">test</button> /* test avec bouton*/
   <span id="logo" (click)="startFabrication()"><img [attr.src]="server+product.logo" /></span>
   <span id="cout"> {{product.cout}} </span>
   <span id="croissance"> {{product.croissance}} </span>

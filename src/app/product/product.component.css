@@ -1,3 +1,10 @@
 .progressbar{
   height: 30px;
 }
+
+/*notre img est deja ronde*/
+img{
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}

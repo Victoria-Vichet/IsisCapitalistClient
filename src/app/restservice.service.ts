@@ -6,7 +6,7 @@ import { World, Pallier, Product } from './world';
   providedIn: 'root'
 })
 export class RestserviceService {
-  private server = 'http://localhost:8080/';
+  private server = 'http://localhost:4040/';
   #user = '';
 
   constructor(private http: HttpClient) { }
@@ -29,7 +29,7 @@ export class RestserviceService {
     return Promise.reject(error.message || error);
   }
   getWorld(): Promise<World> {
-    return this.http.get(this.server + 'adventureisis/generic/world')
+    return this.http.get(this.server + 'minioncapitalist/generic/world')
       .toPromise().catch(this.handleError);
   }
 }

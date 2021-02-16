@@ -22,8 +22,7 @@ export class AppComponent {
       });
   }
 
-  // tslint:disable-next-line:typedef
-  onProductionDone(p: Product) {
+  onProductionDone(p: Product): void {
     this.world.money += p.revenu;
     this.world.score += p.revenu;
   }
