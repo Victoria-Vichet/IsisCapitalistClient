@@ -64,7 +64,10 @@ export class ProductComponent implements OnInit {
   }
 
   calcScore(): void{
-    if (!(this.product.timeleft !== 0)){
+    if (this.product.managerUnlocked && this.product.timeleft === 0) {
+      this.startFabrication();
+    }
+    if (this.product.timeleft !== 0){
       if (this.product.timeleft > (Date.now() - this.lastupdate)){
         this.product.timeleft -= Date.now() - this.lastupdate;
         this.progressBarValue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse * 100);

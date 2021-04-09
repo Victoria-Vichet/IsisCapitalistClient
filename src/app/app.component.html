@@ -2,11 +2,36 @@
   <span><img [attr.src]="server+world.logo" /> </span>
   <span id="worldname"> {{world.name}} </span>
   <span [innerHTML]="world.money | bigvalue"></span>
-  <div (click)="clicMultipli()"> multiplicateur </div>
+  <div (click)="clicMultipli()"> {{qtMulti}} </div>
   <span id="user"> {{user}} </span>
 </div>
 <div class="main">
   <div> liste des boutons de menu </div>
+  <button class="managerbutton" mat-raised-button color="primary" [matBadge]="badgeManagers"
+          [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Managers</button>
+
+  <div *ngIf="showManagers" class="modal">
+    <div><h1 class="title">Managers make you feel better !</h1></div>
+    <div>
+      <div *ngFor="let manager of world.managers.pallier">
+        <div *ngIf="!manager.unlocked" class="managerslayout">
+          <div>
+            <div class="logo"><img class="round" [attr.src]="server+manager.logo" /> </div>
+          </div>
+          <div>
+            <div class="managername"> {{ manager.name}} </div>
+            <div class="managercible"> {{ world.products.product[manager.idcible-1].name }} </div>
+            <div class="managercost"> {{ manager.seuil}} </div>
+          </div>
+          <div>
+            <button class="hirebutton" (click)="hireManager(manager)"
+                 [ngClass]="{'selectable' : (world.money >= manager.seuil)}">Hire !</button>
+          </div>
+        </div>
+      </div>
+      <button class="closebutton" mat-raisedbutton color="primary" (click)="showManagers = !showManagers">Close</button>
+    </div>
+  </div>
   <div class="product">
     <app-product [prod]="world.products.product[0]"
                  class="product col-md-6" (notifyProduction)="onProductionDone($event)"
