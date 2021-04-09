@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { World, Pallier, Product } from './world';
 
 @Injectable({
@@ -8,6 +8,10 @@ import { World, Pallier, Product } from './world';
 export class RestserviceService {
   private server = 'http://localhost:4040/';
   #user = '';
+  private setHeaders(user: string): HttpHeaders {
+    const headers = new HttpHeaders({ 'X-User': user });
+    return headers;
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +35,10 @@ export class RestserviceService {
   getWorld(): Promise<World> {
     return this.http.get(this.server + 'minioncapitalist/generic/world')
       .toPromise().catch(this.handleError);
+  }
+  putProduct(product: Product): Promise<Product> {
+    return this.http.put(this.server + 'minioncapitalist/generic/product', product, {
+      headers: this.setHeaders(this.user)
+    }).toPromise().catch(this.handleError);
   }
 }
