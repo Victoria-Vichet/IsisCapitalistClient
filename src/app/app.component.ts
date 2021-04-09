@@ -17,6 +17,7 @@ export class AppComponent {
   qtMulti: string;
   showManagers: boolean;
   badgeManagers: number;
+  username = '';
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
@@ -27,6 +28,7 @@ export class AppComponent {
       });
     this.showManagers = false;
     this.badgeManagers = 0;
+    this.username = localStorage.getItem('username') || 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
   }
 
   onProductionDone(p: Product): void {
@@ -79,5 +81,10 @@ export class AppComponent {
         this.badgeManagers++;
       }
     }
+  }
+
+  onUsernameChanged(): void {
+    localStorage.setItem('username', this.username);
+    this.service.setUser(this.username);
   }
 }

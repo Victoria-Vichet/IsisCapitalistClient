@@ -7,7 +7,7 @@ import { World, Pallier, Product } from './world';
 })
 export class RestserviceService {
   private server = 'http://localhost:4040/';
-  #user = '';
+  user = '';
   private setHeaders(user: string): HttpHeaders {
     const headers = new HttpHeaders({ 'X-User': user });
     return headers;
@@ -16,11 +16,12 @@ export class RestserviceService {
   constructor(private http: HttpClient) { }
 
   getUser(): string {
-    return this.#user;
+    return this.user;
   }
 
-  set user(value: string) {
-    this.#user = value;
+  // tslint:disable-next-line:typedef
+  setUser(value: string) {
+    this.user = value;
   }
 
 

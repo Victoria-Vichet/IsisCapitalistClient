@@ -4,6 +4,11 @@
   <span [innerHTML]="world.money | bigvalue"></span>
   <div (click)="clicMultipli()"> {{qtMulti}} </div>
   <span id="user"> {{user}} </span>
+  <span>Votre identifiant </span>
+  <div>
+    <input type="text"
+         [(ngModel)]="username" (change)="onUsernameChanged()" />
+  </div>
 </div>
 <div class="main">
   <div> liste des boutons de menu </div>
