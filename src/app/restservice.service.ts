@@ -8,6 +8,7 @@ import { World, Pallier, Product } from './world';
 export class RestserviceService {
   private server = 'http://localhost:4040/';
   user = '';
+
   private setHeaders(user: string): HttpHeaders {
     const headers = new HttpHeaders({ 'X-User': user });
     return headers;
@@ -33,10 +34,12 @@ export class RestserviceService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
+
   getWorld(): Promise<World> {
     return this.http.get(this.server + 'minioncapitalist/generic/world')
       .toPromise().catch(this.handleError);
   }
+
   putProduct(product: Product): Promise<Product> {
     return this.http.put(this.server + 'minioncapitalist/generic/product', product, {
       headers: this.setHeaders(this.user)
