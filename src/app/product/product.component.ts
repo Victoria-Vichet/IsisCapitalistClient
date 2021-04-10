@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
-  _qtmulti: string;
+  //_qtmulti: string;
   _money: number;
 
   @Input()
@@ -34,10 +34,10 @@ export class ProductComponent implements OnInit {
 
   @Input()
   set qtmulti(value: string){
-    //this.qtMulti = value;
-        //if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
-    this._qtmulti = value;
-    if (this._qtmulti && this.product) this.calcMaxCanBuy();
+    this.qtMulti = value;
+    if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
+    //this._qtmulti = value;
+    //if (this._qtmulti && this.product) this.calcMaxCanBuy();
   }
 
   @Input()
@@ -106,7 +106,8 @@ export class ProductComponent implements OnInit {
 
   buyProduct(): void{
     let coutTotal = 0;
-    switch (this._qtmulti) {
+    switch (this.qtMulti) {
+    //switch (this._qtmulti) {
       case '1':
         this.calcMaxCanBuy();
         coutTotal = this.product.cout;
