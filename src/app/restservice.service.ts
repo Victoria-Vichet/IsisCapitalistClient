@@ -46,5 +46,11 @@ export class RestserviceService {
       headers: this.setHeaders(this.user)
     }).toPromise().catch(this.handleError);
   }
+
+  putManager(manager: Pallier): Promise<Pallier> {
+    return this.http.put(this.server + 'minioncapitalist/generic/manager', manager, {
+      headers: this.setHeaders(this.user)
+    }).toPromise().catch(this.handleError);
+  }
 }
 

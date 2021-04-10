@@ -63,15 +63,14 @@ export class ProductComponent implements OnInit {
   }
 
   startFabrication(): void{
-    if(this.product.timeleft == 0){
+    if(this.product.timeleft == 0 && this.product.quantite > 0){
       this.product.timeleft = this.product.vitesse;
       this.lastupdate = Date.now();
-      this.buyProduct();
     }
   }
 
 
-  calcScore() : void { //pas de void car ça doit afficher ? 
+  calcScore() : void { 
     if (this.product.managerUnlocked && this.product.timeleft === 0) {
       this.startFabrication();
     }
@@ -83,7 +82,6 @@ export class ProductComponent implements OnInit {
         this.product.timeleft = 0;
         this.notifyProduction.emit(this.product);
         this.progressBarValue = 0;
-        this.product.quantite = this.product.quantite + 1 ;
         this.service.putProduct(this.product);
       }
     }
@@ -101,43 +99,49 @@ export class ProductComponent implements OnInit {
     } else {
       //this.qtMulti = 'Non';
     }
-  }
-
+  } 
 
   buyProduct(): void{
     let coutTotal = 0;
-    switch (this.qtMulti) {
-    //switch (this._qtmulti) {
-      case '1':
-        this.calcMaxCanBuy();
-        coutTotal = this.product.cout;
-        this.product.cout = this.product.croissance * this.product.cout;
-        this.product.quantite += 1;
-        break;
-      case '10':
-        this.calcMaxCanBuy();
-        coutTotal = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1  - this.product.croissance));
-        this.product.cout = (this.product.croissance ** 10) * this.product.cout;
-        this.product.quantite += 10;
+    let coutProduit = 0;
+    let qtProduit = this.product.quantite;
+      switch (this.qtMulti) {
+      //switch (this._qtmulti) {
+        case '1':
+          this.calcMaxCanBuy();
+          coutTotal = this.product.cout;
+          coutProduit = this.product.croissance * this.product.cout;
+          qtProduit += 1;
+          break;
+        case '10':
+          this.calcMaxCanBuy();
+          coutTotal = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1  - this.product.croissance));
+          coutProduit = (this.product.croissance ** 10) * this.product.cout;
+          qtProduit += 10;
+          break;
+        case '100':
+          this.calcMaxCanBuy();
+          coutTotal = this.product.cout * ((1 - (Math.pow(this.product.croissance, 100)) ) / (1  - this.product.croissance));
+          coutProduit = (this.product.croissance ** 100) * this.product.cout;
+          qtProduit += 100;
+          break;
+        case 'Max':
+          this.calcMaxCanBuy();
+          coutTotal = this.product.cout * ((1 - Math.pow(this.product.croissance, this.quantiteMax)) / (1  - this.product.croissance));
+          coutProduit = (this.product.croissance ** this.quantiteMax) * this.product.cout;
+          qtProduit += this.quantiteMax;
+          break;
+      }
+      console.log('qtProduit: ' + qtProduit);
+      console.log('total: ' + coutTotal);
+      if(this._money>coutTotal){
+        this.notifyPurchase.emit(coutTotal);
+        this.service.putProduct(this.product);
+        this.product.cout = coutProduit;
+        this.product.quantite = qtProduit;
         this.price = coutTotal;
-        break;
-      case '100':
-        this.calcMaxCanBuy();
-        coutTotal = this.product.cout * ((1 - (Math.pow(this.product.croissance, 100)) ) / (1  - this.product.croissance));
-        this.product.cout = (this.product.croissance ** 100) * this.product.cout;
-        this.product.quantite += 100;
-        this.price = coutTotal;
-        break;
-      case 'Max':
-        this.calcMaxCanBuy();
-        coutTotal = this.product.cout * ((1 - Math.pow(this.product.croissance, this.quantiteMax)) / (1  - this.product.croissance));
-        this.product.cout = (this.product.croissance ** this.quantiteMax) * this.product.cout;
-        this.product.quantite += this.quantiteMax;
-        this.price = coutTotal;
-        break;
-    }
-    console.log('total: ' + coutTotal);
-    this.notifyPurchase.emit(coutTotal);
-    this.service.putProduct(this.product);
+      }else{
+        console.log('pas assez dargent');
+      }
   }
 }

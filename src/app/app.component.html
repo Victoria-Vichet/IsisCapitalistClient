@@ -78,7 +78,7 @@
       <div><h1 class="title">Managers make you feel better !</h1></div>
       <div >
         <div *ngFor="let manager of world.managers.pallier" class="product">
-          <div *ngIf="manager.unlocked" class="managerslayout">
+          <div *ngIf="!manager.unlocked" class="managerslayout">
             <!-- Faire une componnent pour le manager ? -->
             <div>
               <div class="logo"><img class="img-manager" [attr.src]="server+manager.logo" /> </div>

@@ -87,10 +87,10 @@ export class AppComponent {
   }
 
   hireManager(m: Pallier): void {
-    if ((this.world.money >= m.seuil) && (this.world.products.product[m.idcible - 1].quantite > 0)) {
+    if ((this.world.money >= m.seuil) && (this.world.products.product[m.idcible].quantite > 0)) {
       this.world.money -= m.seuil;
       m.unlocked = true;
-      this.world.products.product[m.idcible - 1].managerUnlocked = true;
+      this.world.products.product[m.idcible].managerUnlocked = true;
       this.popMessage('Vous avez engagé ' + m.name);
     }
   }
