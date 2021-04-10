@@ -1,6 +1,6 @@
 
 <div class="header">
-  
+
   <mat-grid-list cols="8" rowHeight="fit">
     <mat-grid-tile colspan="2" rowspan="3">
       <span [innerHTML]="world.money | bigvalue"></span>$
@@ -22,7 +22,7 @@
   <span [innerHTML]="world.money | bigvalue"></span>
 </div>
 <div>
-  <img [attr.src]="server+world.logo" /> 
+  <img [attr.src]="server+world.logo" />
   <span id="user"> {{user}} </span>
 </div>
 <span id="worldname"> {{world.name}} </span>
@@ -72,12 +72,12 @@
   <div class="footer">
     <button class="managerbutton" mat-raised-button color="primary" [matBadge]="badgeManagers"
             [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Accès aux managers</button>
-  
+
     <div *ngIf="showManagers" class="modal">
       <div><h1 class="title">Managers make you feel better !</h1></div>
       <div >
         <div *ngFor="let manager of world.managers.pallier" class="product">
-          <div *ngIf="!manager.unlocked" class="managerslayout">
+          <div *ngIf="manager.unlocked" class="managerslayout">
             <!-- Faire une componnent pour le manager ? -->
             <div>
               <div class="logo"><img class="img-manager" [attr.src]="server+manager.logo" /> </div>

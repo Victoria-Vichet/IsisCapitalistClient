@@ -21,9 +21,9 @@ export class AppComponent {
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
-    this.username = localStorage.getItem("username");
+    this.username = localStorage.getItem('username');
 
-    if(this.username == null || this.username==''){
+    if (this.username == null || this.username === ''){
       this.username = 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
       localStorage.setItem('username', this.username);
     }
@@ -31,7 +31,7 @@ export class AppComponent {
     this.showManagers = false;
     this.badgeManagers = 0;
     this.qtMulti = '1';
-    
+
     this.user = this.username;
     service.setUser(this.username);
 
