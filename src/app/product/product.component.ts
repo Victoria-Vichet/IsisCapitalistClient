@@ -132,7 +132,6 @@ export class ProductComponent implements OnInit {
     console.log('total: ' + coutTotal);
     if (this.money > coutTotal){
         this.notifyPurchase.emit(coutTotal);
-        this.service.putProduct(this.product);
         this.product.cout = coutProduit;
         this.product.quantite = qtProduit;
         this.price = coutTotal;
@@ -142,6 +141,7 @@ export class ProductComponent implements OnInit {
             this.calcUpgrade(value);
           }
         });
+        this.service.putProduct(this.product);
       }else{
         console.log('pas assez dargent');
       }
