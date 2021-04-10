@@ -26,6 +26,7 @@ export class AppComponent {
       world => {
         this.world = world;
       });
+    this.qtMulti = '1';
     this.showManagers = false;
     this.badgeManagers = 0;
     this.username = localStorage.getItem('username') || 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);

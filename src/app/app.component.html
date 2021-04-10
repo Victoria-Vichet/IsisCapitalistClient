@@ -10,17 +10,18 @@
       <span id="user"> {{user}} </span>
     </mat-grid-tile>
     <mat-grid-tile colspan="4" rowspan="1" ><span id="user"> Chez {{user}} </span></mat-grid-tile>
-    
+    <mat-grid-tile colspan="3" rowspan="2" ><span>Multiplicateur  :</span>
+      <button (click)="clicMultipli()"> {{qtMulti}} </button>
+    </mat-grid-tile>
   </mat-grid-list>
   <!--<div>
     <span [innerHTML]="world.money | bigvalue"></span>
   </div>
   <div>
-    <img [attr.src]="server+world.logo" /> 
+    <img [attr.src]="server+world.logo" />
     <span id="user"> {{user}} </span>
   </div>
   <span id="worldname"> {{world.name}} </span>
-  <div (click)="clicMultipli()"> {{qtMulti}} </div>
   <div>
     <input type="text"
          [(ngModel)]="username" (change)="onUsernameChanged()" />
@@ -36,12 +37,12 @@
           [prod]="product"
           class="product col-md-6"
           (notifyProduction)="onProductionDone($event)"
-          [qtmulti]="qtmulti"
-          [money]="world.money"
+          [qtmulti]="qtMulti"
+          [moneyWorld]="world.money"
         ></app-product>
       </div>
     </div>
-  
+
   <!--<div class="product" >
     <app-product [prod]="world.products.product[0]"
                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"
@@ -66,7 +67,7 @@
     <div class="footer">
       <button class="managerbutton" mat-raised-button color="primary" [matBadge]="badgeManagers"
               [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Accès aux managers</button>
-    
+
       <div *ngIf="showManagers" class="modal">
         <div><h1 class="title">Managers make you feel better !</h1></div>
         <div >
