@@ -10,7 +10,7 @@ import { MatBadge } from '@angular/material/badge';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'IsisCapitalistClient';
+  title = 'MinionCapitalist';
   world: World = new World();
   server: string;
   user: string;
@@ -21,15 +21,29 @@ export class AppComponent {
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
-    this.user = service.getUser();
+    this.username = localStorage.getItem("username");
+
+    if(this.username==null || this.username==''){
+      this.username = 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
+    }
+    this.showManagers = false;
+    this.badgeManagers = 0;
+    this.qtMulti = '1';
+    
+    this.user = this.username;
+    service.setUser(this.username);
+
     service.getWorld().then(
       world => {
         this.world = world;
       });
-    this.qtMulti = '1';
-    this.showManagers = false;
-    this.badgeManagers = 0;
-    this.username = localStorage.getItem('username') || 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
+
+  }
+
+  onUsernameChanged(): void {
+    localStorage.setItem('username', this.username);
+    this.service.setUser(this.username);
+    window.location.reload();
   }
 
   onProductionDone(p: Product): void {
@@ -84,8 +98,6 @@ export class AppComponent {
     }
   }
 
-  onUsernameChanged(): void {
-    localStorage.setItem('username', this.username);
-    this.service.setUser(this.username);
-  }
+
 }
+

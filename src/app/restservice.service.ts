@@ -23,6 +23,7 @@ export class RestserviceService {
   // tslint:disable-next-line:typedef
   setUser(value: string) {
     this.user = value;
+    this.setHeaders(value);
   }
 
 
@@ -46,3 +47,4 @@ export class RestserviceService {
     }).toPromise().catch(this.handleError);
   }
 }
+
