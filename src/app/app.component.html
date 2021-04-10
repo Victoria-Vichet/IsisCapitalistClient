@@ -75,6 +75,8 @@
             [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Accès aux managers</button>
     <button class="unlockbutton" mat-raised-button color="primary" [matBadge]="badgeUnlocks"
             [matBadgeHidden]="badgeUnlocks==0" (click)="showUnlocks = !showUnlocks">Accès aux unlocks</button>
+    <button class="upgradebutton" mat-raised-button color="primary" [matBadge]="badgeUpgrade"
+            [matBadgeHidden]="badgeUpgrade==0" (click)="showUpgrade = !showUpgrade">Cash Upgrades</button>
 
     <div *ngIf="showManagers" class="modal">
       <div><h1 class="title">Managers make you feel better !</h1></div>
@@ -116,6 +118,28 @@
           </div>
         </div>
         <button class="closebutton" mat-raisedbutton color="primary" (click)="showUnlocks = !showUnlocks">Close</button>
+      </div>
+    </div>
+
+    <div *ngIf="showUpgrade" class="modal">
+      <div><h1 class="title">Uprades make you feel happier !</h1></div>
+      <div>
+        <div *ngFor="let upgrade of world.upgrades.pallier" class="unlocks">
+          <div *ngIf="!upgrade.unlocked" class="upgradelayout">
+            <div>
+              <div class="logo"><img class="img-upgrade" [attr.src]="server+upgrade.logo" /> </div>
+            </div>
+            <div>
+              <div class="upgradename">  Cet upgrade est le pallier de : {{  upgrade.name}}!</div>
+              <div class="upgradeseuil"> {{ upgrade.seuil}} </div>
+              <div>
+                <button class="hirebutton" (click)="buyUpgrade(upgrade)"
+                        [ngClass]="{'selectable' : (world.money >= upgrade.seuil)}">Cash !</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="closebutton" mat-raisedbutton color="primary" (click)="showUpgrade = !showUpgrade">Close</button>
       </div>
     </div>
 

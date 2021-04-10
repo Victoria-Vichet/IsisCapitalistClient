@@ -21,8 +21,11 @@ export class AppComponent {
   username = '';
   showUnlocks: boolean;
   badgeUnlocks: number;
+  badgeUpgrade: number;
+  showUpgrade: boolean;
 
   @ViewChildren(ProductComponent) productsComponent: QueryList<ProductComponent>;
+  // this.productsComponent.forEach(p => p.calcUpgrade(tu));
   // trouver comment utiliser ce productComponent
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
@@ -58,7 +61,8 @@ export class AppComponent {
   onProductionDone(p: Product): void {
     this.world.money += p.revenu;
     this.world.score += p.revenu;
-    this.badgeUpgrades();
+    this.badgeManagersNew();
+    this.badgeUpgradeNew();
   }
 
   onBuy(n: number): void {
@@ -96,6 +100,7 @@ export class AppComponent {
       this.world.money -= m.seuil;
       m.unlocked = true;
       this.world.products.product[m.idcible].managerUnlocked = true;
+      this.service.putManager(m);
       this.popMessage('Vous avez engagé ' + m.name);
     }
   }
@@ -104,11 +109,40 @@ export class AppComponent {
     this.snackBar.open(message, '', {duration: 5000});
   }
 
-  badgeUpgrades(): void {
+  badgeManagersNew(): void {
+    this.badgeManagers = 0;
     for (const manager of this.world.managers.pallier) {
       if (manager.seuil <= this.world.money) {
         this.badgeManagers++;
       }
+    }
+  }
+
+  badgeUpgradeNew(): void {
+    this.badgeUpgrade = 0;
+    for (const manager of this.world.managers.pallier) {
+      if (manager.seuil <= this.world.money) {
+        this.badgeUpgrade++;
+      }
+    }
+  }
+
+  buyUpgrade(p: Pallier): void{
+    if (this.world.money >= p.seuil) {
+      this.world.money -= p.seuil;
+      p.unlocked = true;
+      if (p.idcible === 0) {
+        this.productsComponent.forEach(produit => produit.calcUpgrade(p));
+      }
+      else {
+        this.productsComponent.forEach(produit => {
+          if (p.idcible === produit.product.id) {
+            produit.calcUpgrade(p);
+          }
+        });
+      }
+      this.service.putUpgrade(p);
+      this.popMessage('Vous avez un nouvel avantage ' + p.name);
     }
   }
 }

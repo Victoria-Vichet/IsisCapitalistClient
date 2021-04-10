@@ -37,7 +37,7 @@ export class RestserviceService {
   }
 
   getWorld(): Promise<World> {
-    return this.http.get(this.server + 'minioncapitalist/generic/world',{headers: this.setHeaders(this.user)})
+    return this.http.get(this.server + 'minioncapitalist/generic/world', {headers: this.setHeaders(this.user)})
       .toPromise().catch(this.handleError);
   }
 
@@ -49,6 +49,12 @@ export class RestserviceService {
 
   putManager(manager: Pallier): Promise<Pallier> {
     return this.http.put(this.server + 'minioncapitalist/generic/manager', manager, {
+      headers: this.setHeaders(this.user)
+    }).toPromise().catch(this.handleError);
+  }
+
+  putUpgrade(upgrade: Pallier): Promise<Pallier> {
+    return this.http.put(this.server + 'minioncapitalist/generic/upgrade', upgrade, {
       headers: this.setHeaders(this.user)
     }).toPromise().catch(this.handleError);
   }

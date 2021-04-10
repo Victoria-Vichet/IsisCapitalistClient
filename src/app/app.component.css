@@ -11,8 +11,8 @@
 .main {
   /*display: grid;
   grid-template-columns: 20% 80%;*/
-  height:80%; 
-  background-size:cover; 
+  height:80%;
+  background-size:cover;
   background-image: url('/assets/background.png');
 }
 
@@ -29,8 +29,6 @@
 .modal {
   position: fixed; /* reste en place */
   z-index: 2; /* au dessus du reste */
-  width: auto; /* largeur */
-  height: 800px; /* hauteur */
   overflow: auto; /* barre de scroll si besoin */
   background-color: white; /* opaque */
   border: solid;
@@ -38,6 +36,7 @@
   top:20%; /* a 20% du haut */
   left:25%; /* a 20% de la gauche */
   right:25%;
+  bottom: 0%;
 }
 
 .flex-wrap{
