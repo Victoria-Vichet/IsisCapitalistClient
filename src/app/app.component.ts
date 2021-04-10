@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,6 +40,7 @@ export class AppComponent {
         this.world = world;
       });
 
+    console.log(this.world);
   }
 
   onUsernameChanged(): void {
@@ -48,11 +49,17 @@ export class AppComponent {
     window.location.reload();
   }
 
+  //@Input()
   onProductionDone(p: Product): void {
     this.world.money += p.revenu;
     this.world.score += p.revenu;
     this.badgeUpgrades();
   }
+
+  onBuy(n: Number): void {
+    this.world.money -= Number(n);
+  }
+
 
   clicMultipli(): void {
     switch (this.qtMulti) {

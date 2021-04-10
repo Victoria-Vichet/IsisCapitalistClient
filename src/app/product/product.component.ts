@@ -18,6 +18,8 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
+  _qtmulti: string;
+  _money: number;
 
   @Input()
   set prod(value: Product) {
@@ -32,14 +34,16 @@ export class ProductComponent implements OnInit {
 
   @Input()
   set qtmulti(value: string){
-    this.qtMulti = value;
-    if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
+    //this.qtMulti = value;
+        //if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
+    this._qtmulti = value;
+    if (this._qtmulti && this.product) this.calcMaxCanBuy();
   }
 
   @Input()
   set moneyWorld(value: number){
-    this.money = value;
-    this.calcMaxCanBuy();
+    this._money = value;
+    if (this._money && this.product) this.calcMaxCanBuy();
   }
 
   @Output()
@@ -62,10 +66,12 @@ export class ProductComponent implements OnInit {
     if(this.product.timeleft == 0){
       this.product.timeleft = this.product.vitesse;
       this.lastupdate = Date.now();
+      this.buyProduct();
     }
   }
 
-  calcScore(): void{
+
+  calcScore() : void { //pas de void car ça doit afficher ? 
     if (this.product.managerUnlocked && this.product.timeleft === 0) {
       this.startFabrication();
     }
@@ -77,42 +83,52 @@ export class ProductComponent implements OnInit {
         this.product.timeleft = 0;
         this.notifyProduction.emit(this.product);
         this.progressBarValue = 0;
+        this.product.quantite = this.product.quantite + 1 ;
+        this.service.putProduct(this.product);
       }
     }
   }
 
-  calcMaxCanBuy(): void{
+  //retourne la quantité maximale que l'on peut achete
+  calcMaxCanBuy(){
     // tslint:disable-next-line:max-line-length
-    this.quantiteMax = (Math.log(1 - ((this.money * (1 - this.product.croissance)) / this.product.cout))) / (Math.log(this.product.croissance));
+    this.quantiteMax = Math.floor(Math.log(1 - ((this._money * (1 - this.product.croissance)) / this.product.cout))) / (Math.log(this.product.croissance));
+    return this.quantiteMax;
+
     if (this.quantiteMax > 0) {
       this.quantiteMax = Math.floor(this.quantiteMax);
-      this.qtMulti = String(this.quantiteMax);
+      //this.qtMulti = String(this.quantiteMax);
     } else {
-      this.qtMulti = 'Non';
+      //this.qtMulti = 'Non';
     }
   }
 
+
   buyProduct(): void{
     let coutTotal = 0;
-    switch (this.qtmulti) {
+    switch (this._qtmulti) {
       case '1':
+        this.calcMaxCanBuy();
         coutTotal = this.product.cout;
         this.product.cout = this.product.croissance * this.product.cout;
         this.product.quantite += 1;
         break;
-      case 'x10':
+      case '10':
+        this.calcMaxCanBuy();
         coutTotal = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1  - this.product.croissance));
         this.product.cout = (this.product.croissance ** 10) * this.product.cout;
         this.product.quantite += 10;
         this.price = coutTotal;
         break;
-      case 'x100':
+      case '100':
+        this.calcMaxCanBuy();
         coutTotal = this.product.cout * ((1 - (Math.pow(this.product.croissance, 100)) ) / (1  - this.product.croissance));
         this.product.cout = (this.product.croissance ** 100) * this.product.cout;
         this.product.quantite += 100;
         this.price = coutTotal;
         break;
-      case 'max':
+      case 'Max':
+        this.calcMaxCanBuy();
         coutTotal = this.product.cout * ((1 - Math.pow(this.product.croissance, this.quantiteMax)) / (1  - this.product.croissance));
         this.product.cout = (this.product.croissance ** this.quantiteMax) * this.product.cout;
         this.product.quantite += this.quantiteMax;

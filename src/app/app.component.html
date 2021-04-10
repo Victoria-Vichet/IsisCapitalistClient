@@ -42,6 +42,7 @@
         [prod]="product"
         class="product col-md-6"
         (notifyProduction)="onProductionDone($event)"
+        (notifyPurchase)="onBuy($event)"
         [qtmulti]="qtMulti"
         [moneyWorld]="world.money"
       ></app-product>
