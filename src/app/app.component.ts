@@ -23,9 +23,11 @@ export class AppComponent {
     this.server = service.getServer();
     this.username = localStorage.getItem("username");
 
-    if(this.username==null || this.username==''){
+    if(this.username == null || this.username==''){
       this.username = 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
+      localStorage.setItem('username', this.username);
     }
+
     this.showManagers = false;
     this.badgeManagers = 0;
     this.qtMulti = '1';

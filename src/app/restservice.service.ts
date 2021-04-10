@@ -37,7 +37,7 @@ export class RestserviceService {
   }
 
   getWorld(): Promise<World> {
-    return this.http.get(this.server + 'minioncapitalist/generic/world')
+    return this.http.get(this.server + 'minioncapitalist/generic/world',{headers: this.setHeaders(this.user)})
       .toPromise().catch(this.handleError);
   }
 
