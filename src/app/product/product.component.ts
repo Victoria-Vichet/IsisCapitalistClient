@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Product} from '../world';
+import {Pallier, Product} from '../world';
 import { RestserviceService } from '../restservice.service';
 
 @Component({
@@ -18,8 +18,6 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
-  //_qtmulti: string;
-  _money: number;
 
   @Input()
   set prod(value: Product) {
@@ -36,14 +34,12 @@ export class ProductComponent implements OnInit {
   set qtmulti(value: string){
     this.qtMulti = value;
     if (this.qtMulti && this.product) { this.calcMaxCanBuy(); }
-    //this._qtmulti = value;
-    //if (this._qtmulti && this.product) this.calcMaxCanBuy();
   }
 
   @Input()
   set moneyWorld(value: number){
-    this._money = value;
-    if (this._money && this.product) this.calcMaxCanBuy();
+    this.money = value;
+    if (this.money && this.product) { this.calcMaxCanBuy(); }
   }
 
   @Output()
@@ -63,14 +59,14 @@ export class ProductComponent implements OnInit {
   }
 
   startFabrication(): void{
-    if(this.product.timeleft == 0 && this.product.quantite > 0){
+    if (this.product.timeleft === 0 && this.product.quantite > 0){
       this.product.timeleft = this.product.vitesse;
       this.lastupdate = Date.now();
     }
   }
 
 
-  calcScore() : void { 
+  calcScore(): void {
     if (this.product.managerUnlocked && this.product.timeleft === 0) {
       this.startFabrication();
     }
@@ -87,26 +83,26 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  //retourne la quantité maximale que l'on peut achete
-  calcMaxCanBuy(){
+  // retourne la quantité maximale que l'on peut achete
+  calcMaxCanBuy(): number{
     // tslint:disable-next-line:max-line-length
-    this.quantiteMax = Math.floor(Math.log(1 - ((this._money * (1 - this.product.croissance)) / this.product.cout))) / (Math.log(this.product.croissance));
+    this.quantiteMax = Math.floor(Math.log(1 - ((this.money * (1 - this.product.croissance)) / this.product.cout))) / (Math.log(this.product.croissance));
     return this.quantiteMax;
 
     if (this.quantiteMax > 0) {
       this.quantiteMax = Math.floor(this.quantiteMax);
-      //this.qtMulti = String(this.quantiteMax);
+      // this.qtMulti = String(this.quantiteMax);
     } else {
-      //this.qtMulti = 'Non';
+      // this.qtMulti = 'Non';
     }
-  } 
+  }
 
   buyProduct(): void{
     let coutTotal = 0;
     let coutProduit = 0;
     let qtProduit = this.product.quantite;
-      switch (this.qtMulti) {
-      //switch (this._qtmulti) {
+    switch (this.qtMulti) {
+      // switch (this._qtmulti) {
         case '1':
           this.calcMaxCanBuy();
           coutTotal = this.product.cout;
@@ -132,16 +128,33 @@ export class ProductComponent implements OnInit {
           qtProduit += this.quantiteMax;
           break;
       }
-      console.log('qtProduit: ' + qtProduit);
-      console.log('total: ' + coutTotal);
-      if(this._money>coutTotal){
+    console.log('qtProduit: ' + qtProduit);
+    console.log('total: ' + coutTotal);
+    if (this.money > coutTotal){
         this.notifyPurchase.emit(coutTotal);
         this.service.putProduct(this.product);
         this.product.cout = coutProduit;
         this.product.quantite = qtProduit;
         this.price = coutTotal;
+        this.product.palliers.pallier.forEach(value => {
+          if (!value.unlocked && this.product.quantite > value.seuil) {
+            this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].unlocked = true;
+            this.calcUpgrade(value);
+          }
+        });
       }else{
         console.log('pas assez dargent');
       }
+  }
+
+  calcUpgrade(pallier: Pallier): void {
+    switch (pallier.typeratio) {
+      case 'gain':
+        this.product.revenu = this.product.revenu * pallier.ratio;
+        break;
+      case 'vitesse':
+        this.product.vitesse = this.product.vitesse / pallier.ratio;
+        break;
+    }
   }
 }

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, QueryList, ViewChildren} from '@angular/core';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBadge } from '@angular/material/badge';
+import {ProductComponent} from './product/product.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,11 @@ export class AppComponent {
   showManagers: boolean;
   badgeManagers: number;
   username = '';
+  showUnlocks: boolean;
+  badgeUnlocks: number;
+
+  @ViewChildren(ProductComponent) productsComponent: QueryList<ProductComponent>;
+  // trouver comment utiliser ce productComponent
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
@@ -49,15 +55,14 @@ export class AppComponent {
     window.location.reload();
   }
 
-  //@Input()
   onProductionDone(p: Product): void {
     this.world.money += p.revenu;
     this.world.score += p.revenu;
     this.badgeUpgrades();
   }
 
-  onBuy(n: Number): void {
-    this.world.money -= Number(n);
+  onBuy(n: number): void {
+    this.world.money -= n;
   }
 
 
@@ -106,7 +111,5 @@ export class AppComponent {
       }
     }
   }
-
-
 }
 
