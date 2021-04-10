@@ -59,8 +59,10 @@ export class ProductComponent implements OnInit {
   }
 
   startFabrication(): void{
-    this.product.timeleft = this.product.vitesse;
-    this.lastupdate = Date.now();
+    if(this.product.timeleft == 0){
+      this.product.timeleft = this.product.vitesse;
+      this.lastupdate = Date.now();
+    }
   }
 
   calcScore(): void{
