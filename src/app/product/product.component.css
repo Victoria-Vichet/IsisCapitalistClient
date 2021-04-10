@@ -4,7 +4,6 @@
 
 /*notre img est deja ronde*/
 img{
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
+  width: 150px;
+  height: 150px;
 }

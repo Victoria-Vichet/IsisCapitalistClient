@@ -1,58 +1,97 @@
 <div class="header">
-  <span><img [attr.src]="server+world.logo" /> </span>
+  <mat-grid-list cols="8" rowHeight="fit">
+    <mat-grid-tile colspan="2" rowspan="3" >
+      <span [innerHTML]="world.money | bigvalue">  </span>$
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" rowspan="2" >
+      <img [attr.src]="server+world.logo" class="tile-image"/>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="3" >
+      <span id="user"> {{user}} </span>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" rowspan="1" ><span id="user"> Chez {{user}} </span></mat-grid-tile>
+    
+  </mat-grid-list>
+  <!--<div>
+    <span [innerHTML]="world.money | bigvalue"></span>
+  </div>
+  <div>
+    <img [attr.src]="server+world.logo" /> 
+    <span id="user"> {{user}} </span>
+  </div>
   <span id="worldname"> {{world.name}} </span>
-  <span [innerHTML]="world.money | bigvalue"></span>
   <div (click)="clicMultipli()"> {{qtMulti}} </div>
-  <span id="user"> {{user}} </span>
-  <span>Votre identifiant </span>
   <div>
     <input type="text"
          [(ngModel)]="username" (change)="onUsernameChanged()" />
-  </div>
+  </div>-->
 </div>
-<div class="main">
-  <div> liste des boutons de menu </div>
-  <button class="managerbutton" mat-raised-button color="primary" [matBadge]="badgeManagers"
-          [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Managers</button>
 
-  <div *ngIf="showManagers" class="modal">
-    <div><h1 class="title">Managers make you feel better !</h1></div>
-    <div>
-      <div *ngFor="let manager of world.managers.pallier">
-        <div *ngIf="!manager.unlocked" class="managerslayout">
-          <div>
-            <div class="logo"><img class="round" [attr.src]="server+manager.logo" /> </div>
+<div class="main" >
+  <div class="body">
+  <!--<div> liste des boutons de menu </div>-->
+    <div class="product">
+      <div *ngFor="let product of this.world.products.product">
+        <app-product
+          [prod]="product"
+          class="product col-md-6"
+          (notifyProduction)="onProductionDone($event)"
+          [qtmulti]="qtmulti"
+          [money]="world.money"
+        ></app-product>
+      </div>
+    </div>
+  
+  <!--<div class="product" >
+    <app-product [prod]="world.products.product[0]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+    <app-product [prod]="world.products.product[1]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                  [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+    <app-product [prod]="world.products.product[2]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+    <app-product [prod]="world.products.product[3]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+    <app-product [prod]="world.products.product[4]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+    <app-product [prod]="world.products.product[5]"
+                class="product col-md-6" (notifyProduction)="onProductionDone($event)"
+                [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
+  </div>-->
+
+    <div class="footer">
+      <button class="managerbutton" mat-raised-button color="primary" [matBadge]="badgeManagers"
+              [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Accès aux managers</button>
+    
+      <div *ngIf="showManagers" class="modal">
+        <div><h1 class="title">Managers make you feel better !</h1></div>
+        <div >
+          <div *ngFor="let manager of world.managers.pallier" class="product">
+            <div *ngIf="!manager.unlocked" class="managerslayout">
+              <!-- Faire une componnent pour le manager ? -->
+              <div>
+                <div class="logo"><img class="img-manager" [attr.src]="server+manager.logo" /> </div>
+              </div>
+              <div>
+                <div class="managername">  Salut, moi c'est {{  manager.name}}!</div>
+                <div class="managercible"> Mon secteur, c'est {{ world.products.product[manager.idcible].name }} </div>
+                <!--<div class="managername"> {{ manager}} </div>-->
+                <div class="managercost"> {{ manager.seuil}} </div>
+              </div>
+              <div>
+                <button class="hirebutton" (click)="hireManager(manager)"
+                    [ngClass]="{'selectable' : (world.money >= manager.seuil)}">Hire !</button>
+              </div>
+            </div>
           </div>
-          <div>
-            <div class="managername"> {{ manager.name}} </div>
-            <div class="managercible"> {{ world.products.product[manager.idcible-1].name }} </div>
-            <div class="managercost"> {{ manager.seuil}} </div>
-          </div>
-          <div>
-            <button class="hirebutton" (click)="hireManager(manager)"
-                 [ngClass]="{'selectable' : (world.money >= manager.seuil)}">Hire !</button>
-          </div>
+          <button class="closebutton" mat-raisedbutton color="primary" (click)="showManagers = !showManagers">Close</button>
         </div>
       </div>
-      <button class="closebutton" mat-raisedbutton color="primary" (click)="showManagers = !showManagers">Close</button>
     </div>
   </div>
-  <div class="product">
-    <app-product [prod]="world.products.product[0]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"
-                 [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
-    <app-product [prod]="world.products.product[1]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"
-                  [qtmulti]="qtMulti" [moneyWorld]="world.money"></app-product>
-    <!--
-    <app-product [prod]="world.products.product[2]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-    <app-product [prod]="world.products.product[3]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-    <app-product [prod]="world.products.product[4]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-    <app-product [prod]="world.products.product[5]"
-                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-                 -->
-  </div>
 </div>
+

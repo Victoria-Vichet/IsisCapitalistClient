@@ -7,7 +7,7 @@ import { World, Pallier, Product } from './world';
 })
 export class RestserviceService {
   private server = 'http://localhost:4040/';
-  user = '';
+  user = 'Michel';
 
   private setHeaders(user: string): HttpHeaders {
     const headers = new HttpHeaders({ 'X-User': user });

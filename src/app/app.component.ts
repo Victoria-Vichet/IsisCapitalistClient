@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatBadge} from '@angular/material/badge';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatBadge } from '@angular/material/badge';
 
 @Component({
   selector: 'app-root',

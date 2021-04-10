@@ -1,23 +1,54 @@
 .header {
   display: grid;
-  grid-template-columns: 25% 25% 30% 20%;
+  grid-template-columns: 100% auto;
+  height: 20%;
+}
+
+.tile-image {
+  width:100%;
+  height: auto;
 }
 .main {
-  display: grid;
-  grid-template-columns: 20% 80%;
+  /*display: grid;
+  grid-template-columns: 20% 80%;*/
+  height:80%; 
+  background-size:cover; 
+  background-image: url('/assets/background.png');
+}
+
+.body{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .product {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .modal {
   position: fixed; /* reste en place */
   z-index: 2; /* au dessus du reste */
-  width: 800px; /* largeur */
+  width: auto; /* largeur */
   height: 800px; /* hauteur */
   overflow: auto; /* barre de scroll si besoin */
   background-color: white; /* opaque */
   border: solid;
-  top:10%; /* a 10% du haut */
-  left:20%; /* a 20% de la gauche */
+  border-color: #36697F;
+  top:20%; /* a 20% du haut */
+  left:25%; /* a 20% de la gauche */
+  right:25%;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+.flex{
+  flex-direction: column;
+}
+
+.img-manager{
+  width: 150px;
+  height: 150px;
 }

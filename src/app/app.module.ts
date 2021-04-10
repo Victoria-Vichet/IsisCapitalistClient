@@ -10,6 +10,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatBadgeModule} from '@angular/material/badge';
 import {FormsModule} from '@angular/forms';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {FormsModule} from '@angular/forms';
     MatSnackBarModule,
     MatBadgeModule,
     FormsModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
