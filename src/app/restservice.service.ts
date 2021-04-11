@@ -58,5 +58,11 @@ export class RestserviceService {
       headers: this.setHeaders(this.user)
     }).toPromise().catch(this.handleError);
   }
+
+  resetWorld(w: World): Promise<World> {
+    return this.http.put(this.server + 'minioncapitalist/generic/world', w, {
+      headers: this.setHeaders(this.user)
+    }).toPromise().catch(this.handleError);
+  }
 }
 

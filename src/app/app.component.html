@@ -141,6 +141,13 @@
       </div>
     </div>
 
+    <button (click)="showAngels = !showAngels">Test</button>
+    <div *ngIf="showAngels" class="modal">
+      <button (click)="resetWorld(world)">Reset world : Vous gagnerez {{calcAngel()}} ange(s) !</button>
+      <div>
+        <button mat-raised-button  class="closebutton text-jaune" color="accent" (click)="showAngels = !showAngels">FERMER</button>
+      </div>
+    </div>
   <!--<div class="product" >
     <app-product [prod]="world.products.product[0]"
                 class="product col-md-6" (notifyProduction)="onProductionDone($event)"

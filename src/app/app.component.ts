@@ -24,6 +24,8 @@ export class AppComponent {
   badgeUnlocks: number;
   badgeUpgrade: number;
   showUpgrade: boolean;
+  showAngels: boolean;
+  newAngels: number;
 
   @ViewChildren(ProductComponent) productsComponent: QueryList<ProductComponent>;
   // this.productsComponent.forEach(p => p.calcUpgrade(tu));
@@ -41,6 +43,7 @@ export class AppComponent {
     this.showManagers = false;
     this.badgeManagers = 0;
     this.qtMulti = '1';
+    this.showAngels = false;
 
     this.user = this.username;
     service.setUser(this.username);
@@ -144,6 +147,16 @@ export class AppComponent {
       this.service.putUpgrade(p);
       this.popMessage('Vous avez un nouvel avantage ' + p.name);
     }
+  }
+
+  resetWorld(w: World): void{
+    this.world.totalangels += this.newAngels;
+    this.service.resetWorld(w);
+  }
+
+  calcAngel(): number{
+    this.newAngels = Math.trunc(150 * Math.sqrt((this.world.score / Math.pow(10, 15))) - this.world.totalangels);
+    return this.newAngels;
   }
 }
 
