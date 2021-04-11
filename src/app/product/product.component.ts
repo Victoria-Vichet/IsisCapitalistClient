@@ -19,14 +19,13 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
-  // _value: number;
   pallierAPasser: number;
 
   @Input()
   set prod(value: Product) {
     this.product = value;
     this.price = this.product.cout;
-    // this._value = this.product.palliers.pallier.forEach
+
     if (this.product && this.product.timeleft > 0) {
       this.lastupdate = Date.now();
       this.progressBar.set((this.product.vitesse - this.product.timeleft) / this.product.vitesse);
@@ -60,7 +59,6 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => { this.calcScore(); }, 100);
     this.progressBarValue = 0;
-
     this.pallierAPasser = this.product.palliers.pallier[0].seuil;
   }
 
@@ -93,6 +91,7 @@ export class ProductComponent implements OnInit {
   calcMaxCanBuy(): number{
     // tslint:disable-next-line:max-line-length
     this.quantiteMax = Math.floor(Math.log(1 - ((this.money * (1 - this.product.croissance)) / this.product.cout))) / (Math.log(this.product.croissance));
+    this.quantiteMax = Math.trunc(this.quantiteMax);
     return this.quantiteMax;
 
     if (this.quantiteMax > 0) {
@@ -107,28 +106,25 @@ export class ProductComponent implements OnInit {
     let coutTotal = 0;
     let coutProduit = 0;
     let qtProduit = this.product.quantite;
+    this.calcMaxCanBuy();
     switch (this.qtMulti) {
       // switch (this._qtmulti) {
         case '1':
-          this.calcMaxCanBuy();
           coutTotal = this.product.cout;
           coutProduit = this.product.croissance * this.product.cout;
           qtProduit += 1;
           break;
         case '10':
-          this.calcMaxCanBuy();
           coutTotal = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1  - this.product.croissance));
           coutProduit = (this.product.croissance ** 10) * this.product.cout;
           qtProduit += 10;
           break;
         case '100':
-          this.calcMaxCanBuy();
           coutTotal = this.product.cout * ((1 - (Math.pow(this.product.croissance, 100)) ) / (1  - this.product.croissance));
           coutProduit = (this.product.croissance ** 100) * this.product.cout;
           qtProduit += 100;
           break;
         case 'Max':
-          this.calcMaxCanBuy();
           coutTotal = this.product.cout * ((1 - Math.pow(this.product.croissance, this.quantiteMax)) / (1  - this.product.croissance));
           coutProduit = (this.product.croissance ** this.quantiteMax) * this.product.cout;
           qtProduit += this.quantiteMax;
@@ -139,10 +135,18 @@ export class ProductComponent implements OnInit {
         this.product.cout = Math.round((coutProduit * (10 ** 2))) / (10 ** 2);
         this.product.quantite = qtProduit;
         this.price = coutTotal;
+
+        
+        //update pour chaque value l'image et le pallier
         this.product.palliers.pallier.forEach(value => {
           if (!value.unlocked && this.product.quantite > value.seuil) {
-            this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].unlocked = true;
-            this.pallierAPasser = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value) + 1].seuil;
+            let p = this.product.palliers.pallier.indexOf(value);
+            this.product.palliers.pallier[p].unlocked = true;
+            if(this.product.palliers.pallier[p+1]){
+              this.pallierAPasser = this.product.palliers.pallier[p+1].seuil;
+            } else {
+              this.pallierAPasser = 123 ;
+            }
             this.calcUpgrade(value);
             this.product.name = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].name;
             this.product.logo = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].logo;
