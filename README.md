@@ -1,7 +1,7 @@
 # MinionCapitalist
 # Réalisé par Marisol Canavy et Victoria Vichet
-Année scolaire 2020-2021
-Cours de SOA
+Année scolaire 2020-2021 - 
+Cours de SOA -
 FIE4
 
 # IsisCapitalistClient
