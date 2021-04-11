@@ -61,7 +61,11 @@ export class AppComponent {
   }
 
   onProductionDone(p: Product): void {
-    this.world.money += p.revenu;
+    if (this.world.totalangels > 0){
+      this.world.money += (p.revenu + (this.world.totalangels * (0.2 * p.revenu)));
+    }else{
+      this.world.money += p.revenu;
+    }
     this.world.score += p.revenu;
     this.badgeManagersNew();
     this.badgeUpgradeNew();
