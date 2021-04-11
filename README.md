@@ -1,3 +1,9 @@
+# MinionCapitalist
+# Réalisé par Marisol Canavy et Victoria Vichet
+Année scolaire 2020-2021
+Cours de SOA
+FIE4
+
 # IsisCapitalistClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
