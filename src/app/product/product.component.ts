@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Pallier, Product} from '../world';
 import { RestserviceService } from '../restservice.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product',
@@ -51,7 +52,7 @@ export class ProductComponent implements OnInit {
   @Output()
   notifyPurchase: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private service: RestserviceService) {
+  constructor(private service: RestserviceService,  private snackBar: MatSnackBar) {
     this.server = service.getServer();
     this.progressBarValue = 0;
   }
@@ -143,6 +144,9 @@ export class ProductComponent implements OnInit {
             this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].unlocked = true;
             this.pallierAPasser = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value) + 1].seuil;
             this.calcUpgrade(value);
+            this.product.name = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].name;
+            this.product.logo = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].logo;
+            this.popMessage('Nouveau seuil atteint !');
           }
         });
         this.service.putProduct(this.product);
@@ -160,5 +164,9 @@ export class ProductComponent implements OnInit {
         this.product.vitesse = this.product.vitesse / pallier.ratio;
         break;
     }
+  }
+
+  popMessage(message: string): void {
+    this.snackBar.open(message, '', {duration: 5000});
   }
 }
