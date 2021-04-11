@@ -18,11 +18,13 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
+  _value: number;
 
   @Input()
   set prod(value: Product) {
     this.product = value;
     this.price = this.product.cout;
+    //this._value = this.product.palliers.pallier.forEach
     if (this.product && this.product.timeleft > 0) {
       this.lastupdate = Date.now();
       this.progressBar.set((this.product.vitesse - this.product.timeleft) / this.product.vitesse);
@@ -128,11 +130,9 @@ export class ProductComponent implements OnInit {
           qtProduit += this.quantiteMax;
           break;
       }
-    console.log('qtProduit: ' + qtProduit);
-    console.log('total: ' + coutTotal);
     if (this.money > coutTotal){
         this.notifyPurchase.emit(coutTotal);
-        this.product.cout = coutProduit;
+        this.product.cout = Math.round((coutProduit*(10 ** 2)))/(10 ** 2);
         this.product.quantite = qtProduit;
         this.price = coutTotal;
         this.product.palliers.pallier.forEach(value => {

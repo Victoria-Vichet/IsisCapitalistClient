@@ -11,7 +11,7 @@
 .main {
   /*display: grid;
   grid-template-columns: 20% 80%;*/
-  height:85%;
+  /*height:85%;*/
   background-size:cover;
   background-image: url('/assets/background.png');
 }
@@ -21,7 +21,10 @@
   margin-left: auto;
   margin-right: auto;
 }
-.product {
+
+.display-grid-3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: grid;
   grid-template-columns: auto auto auto;
 }
@@ -37,6 +40,7 @@
   left:25%; /* a 20% de la gauche */
   right:25%;
   bottom: 0%;
+  text-align: center;
 }
 
 .flex-wrap{
@@ -62,7 +66,7 @@
   color: #E0AA5A;
 }
 
-#user{
+.text-blue{
   font-family: Roboto;
   font-style: normal;
   font-weight: bolder;
@@ -78,6 +82,7 @@
   background: url('/assets/money.png');
   background-size: contain;
   border-radius: 10px;
+  margin-left: 20px;
 }
 
 .icon-score{
@@ -86,13 +91,14 @@
   background: url('/assets/score.png');
   background-size: contain;
   border-radius: 10px;
+  margin-right: 20px;
 }
 
 .head{
+  display: grid;
+  grid-template-columns: auto auto auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
 }
 
 button{
@@ -116,5 +122,28 @@ button{
   font-weight: bolder;
   letter-spacing: 0.105em;
   color: #F2C448;
-  border: 1px solid #F2C448;
+}
+
+.img-upgrade{
+  width: 150px;
+  height: 150px;
+}
+
+.img-unlock{
+  width: 150px;
+  height: 150px;
+}
+
+.content-grid{
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+}
+
+.width-200{
+  width: 200px;
+}
+
+.to-upper{
+  text-transform:uppercase;
 }

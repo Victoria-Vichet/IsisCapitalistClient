@@ -5,19 +5,28 @@
     <mat-grid-tile colspan="2" rowspan="3" class="text">
       <span [innerHTML]="world.money | bigvalue" ></span>$
       <div class="icon-money"></div>
-      <span [innerHTML]="world.score | bigvalue"></span>
     </mat-grid-tile>
     <mat-grid-tile colspan="4" rowspan="2" >
       <img [attr.src]="server+world.logo" class="tile-image"/>
     </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="3" class="text">
+      <div class="icon-score"></div>
+      <span [innerHTML]="world.score | bigvalue" ></span>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1" >
+      <mat-form-field>
+        <input matInput type="text"
+        [(ngModel)]="username" (change)="onUsernameChanged()" />
+      </mat-form-field>
+    </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" >
-      <input type="text"
-       [(ngModel)]="username" (change)="onUsernameChanged()" />
+      <span id="user" class="text-blue"> Chez {{user}} </span>
     </mat-grid-tile>
-    <mat-grid-tile colspan="4" rowspan="1" ><span id="user"> Chez {{user}} </span></mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="1" > Mutliplicateur :
-      <button (click)="clicMultipli()"> {{qtMulti}} </button>
+    <mat-grid-tile colspan="1" rowspan="1" >
+      <button mat-raised-button class="text-jaune"  color="accent" (click)="clicMultipli()"> x{{qtMulti}} </button>
     </mat-grid-tile>
+
+    
   </mat-grid-list>
 
 <!--<div>
@@ -38,82 +47,90 @@
 <div class="main">
   <div class="body">
     <div class="head">
-      <button mat-raised-button class="managerbutton text-rose" mat-raised-button color="primary" [matBadge]="badgeManagers"
+      <button mat-raised-button class="managerbutton text-rose width-200" color="primary" [matBadge]="badgeManagers"
               [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Accès aux managers</button>
-      <button mat-raised-button class="unlockbutton text-rose" mat-raised-button color="primary" [matBadge]="badgeUnlocks"
+      <button mat-raised-button class="unlockbutton text-rose width-200" color="primary" [matBadge]="badgeUnlocks"
               [matBadgeHidden]="badgeUnlocks==0" (click)="showUnlocks = !showUnlocks">Accès aux unlocks</button>
-      <button mat-raised-button class="upgradebutton text-rose" mat-raised-button color="primary" [matBadge]="badgeUpgrade"
+      <button mat-raised-button class="upgradebutton text-rose width-200" color="primary" [matBadge]="badgeUpgrade"
               [matBadgeHidden]="badgeUpgrade==0" (click)="showUpgrade = !showUpgrade">Cash Upgrades</button>
 
       <div *ngIf="showManagers" class="modal">
-        <div><h1 class="title">Managers make you feel better !</h1></div>
-        <div >
-          <div *ngFor="let manager of world.managers.pallier" class="product">
+        <div><h1 class="title text-blue"> Développe tes produits avec les managers !</h1></div>
+        <div class="display-grid-3">
+          <div *ngFor="let manager of world.managers.pallier" class="display-grid-3">
             <div *ngIf="!manager.unlocked" class="managerslayout">
               <!-- Faire une componnent pour le manager ? -->
               <div>
                 <div class="logo"><img class="img-manager" [attr.src]="server+manager.logo" /> </div>
               </div>
               <div>
-                <div class="managername">  Salut, moi c'est {{  manager.name}}!</div>
-                <div class="managercible"> Mon secteur, c'est {{ world.products.product[manager.idcible].name }} </div>
+                <div class="managername text-jaune to-upper">  {{  manager.name}}</div>
+                <div class="managercible text-jaune"> SECTEUR : {{ world.products.product[manager.idcible].name }} </div>
                 <!--<div class="managername"> {{ manager}} </div>-->
-                <div class="managercost"> {{ manager.seuil}} </div>
+                <div class="managercost text-jaune"> COUT : {{ manager.seuil}} </div>
               </div>
               <div>
-                <button class="hirebutton" (click)="hireManager(manager)"
-                    [ngClass]="{'selectable' : (world.money >= manager.seuil)}">Hire !</button>
+                <button mat-raised-button color="primary" class="hirebutton text-rose" (click)="hireManager(manager)"
+                    [ngClass]="{'selectable' : (world.money >= manager.seuil)}"> Engagée !</button>
               </div>
             </div>
           </div>
-          <button class="closebutton" mat-raisedbutton color="primary" (click)="showManagers = !showManagers">Close</button>
+        </div>
+        <div>
+          <button mat-raised-button  color="accent"  class="closebutton text-jaune" (click)="showManagers = !showManagers">Close</button>
         </div>
       </div>
 
       <div *ngIf="showUnlocks" class="modal">
-        <div><h1 class="title">Unlocks make you feel more better !</h1></div>
-        <div>
+        <div><h1 class="title text-blue"> Soit encore plus performant avec les Unlocks !</h1></div>
+        <div class="display-grid-3" >
           <div *ngFor="let unlock of world.allunlocks.pallier" class="unlocks">
             <div *ngIf="!unlock.unlocked" class="unlockslayout">
               <div>
                 <div class="logo"><img class="img-unlock" [attr.src]="server+unlock.logo" /> </div>
               </div>
               <div>
-                <div class="unlockname">  Ce pallier est le pallier de : {{  unlock.name}}!</div>
-                <div class="unlockseuil"> {{ unlock.seuil}} </div>
+                <div class="unlockname text-jaune to-upper"> {{  unlock.name}}</div>
+                <div class="unlockseuil text-jaune "> COUT : {{ unlock.seuil}} </div>
               </div>
             </div>
           </div>
-          <button class="closebutton" mat-raisedbutton color="primary" (click)="showUnlocks = !showUnlocks">Close</button>
+        </div>
+        <div>
+          <button mat-raised-button  class="closebutton text-jaune" color="accent" (click)="showUnlocks = !showUnlocks"> FERMER </button>
         </div>
       </div>
 
       <div *ngIf="showUpgrade" class="modal">
-        <div><h1 class="title">Uprades make you feel happier !</h1></div>
         <div>
+          <h1 class="title text-blue"> Soit encore plus performant avec les Upgrades !</h1>
+        </div>
+        <div class="display-grid-3">
           <div *ngFor="let upgrade of world.upgrades.pallier" class="unlocks">
             <div *ngIf="!upgrade.unlocked" class="upgradelayout">
               <div>
                 <div class="logo"><img class="img-upgrade" [attr.src]="server+upgrade.logo" /> </div>
               </div>
               <div>
-                <div class="upgradename">  Cet upgrade est le pallier de : {{  upgrade.name}}!</div>
-                <div class="upgradeseuil"> {{ upgrade.seuil}} </div>
+                <div class="upgradename text-jaune to-upper"> {{  upgrade.name}}</div>
+                <div class="upgradeseuil text-jaune"> COÛT :  {{ upgrade.seuil}}$ </div>
                 <div>
-                  <button class="hirebutton" (click)="buyUpgrade(upgrade)"
-                          [ngClass]="{'selectable' : (world.money >= upgrade.seuil)}">Cash !</button>
+                  <button mat-raised-button class="hirebutton text-rose" color="primary" (click)="buyUpgrade(upgrade)"
+                          [ngClass]="{'selectable' : (world.money >= upgrade.seuil)}"> J'achète l'upgrade !</button>
                 </div>
               </div>
             </div>
           </div>
-          <button class="closebutton" mat-raisedbutton color="primary" (click)="showUpgrade = !showUpgrade">Close</button>
+        </div>
+        <div>
+          <button mat-raised-button  class="closebutton text-jaune" color="accent" (click)="showUpgrade = !showUpgrade">FERMER</button>
         </div>
       </div>
     </div>
 
   <!--<div> liste des boutons de menu </div>-->
-    <div class="product">
-      <div *ngFor="let product of this.world.products.product">
+    <div class="display-grid-3">
+      <div *ngFor="let product of this.world.products.product" class="content-grid">
         <app-product
           [prod]="product"
           class="product col-md-6"

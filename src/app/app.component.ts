@@ -34,7 +34,7 @@ export class AppComponent {
     this.username = localStorage.getItem('username');
 
     if (this.username == null || this.username === ''){
-      this.username = 'UnicornPowerFlower' + Math.floor(Math.random() * 10000);
+      this.username = 'Unicorn' + Math.floor(Math.random() * 10000);
       localStorage.setItem('username', this.username);
     }
 
@@ -49,8 +49,6 @@ export class AppComponent {
       world => {
         this.world = world;
       });
-
-    console.log(this.world);
   }
 
   onUsernameChanged(): void {

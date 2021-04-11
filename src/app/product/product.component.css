@@ -1,5 +1,6 @@
 .progressbar{
   height: 30px;
+  background-color: #36697F;
 }
 
 /*notre img est deja ronde*/
@@ -15,7 +16,6 @@ button{
   border: transparent;
   height: 30px;
   top: -30px;
-  left: 30px;
 }
 
 .text-rose{
@@ -24,6 +24,7 @@ button{
   font-weight: bold;
   letter-spacing: 0.105em;
   color: #D57BB4;
+  font-size: large;
 }
 
 .text-jaune{
@@ -37,4 +38,22 @@ button{
 .container{
   margin-left: auto;
   margin-right: auto;
+  width: 200px;
+  margin-top: 5px;
+  margin-bottom: 30px;
 }
+
+.style-quantite{
+  background-color: #F2C448;
+  border-radius: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bolder;
+  letter-spacing: 0.105em;
+  color: #D57BB4;
+  text-align: center;
+  padding: 3px 30px;
+  top: -20px;
+  position: relative;
+  font-size: large;
+  }
