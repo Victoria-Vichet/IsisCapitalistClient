@@ -1,7 +1,7 @@
 .header {
   display: grid;
   grid-template-columns: 100% auto;
-  height: 20%;
+  height: 15%;
 }
 
 .tile-image {
@@ -11,7 +11,7 @@
 .main {
   /*display: grid;
   grid-template-columns: 20% 80%;*/
-  height:80%;
+  height:85%;
   background-size:cover;
   background-image: url('/assets/background.png');
 }
@@ -23,7 +23,7 @@
 }
 .product {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto auto;
 }
 
 .modal {
@@ -50,4 +50,71 @@
 .img-manager{
   width: 150px;
   height: 150px;
+}
+
+.text{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 30px;
+  line-height: 35px;
+  letter-spacing: 0.105em;
+  color: #E0AA5A;
+}
+
+#user{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 27px;
+  line-height: 32px;
+  letter-spacing: 0.105em;
+  color: #36697F;
+}
+
+.icon-money{
+  width: 56px;
+  height: 56px;
+  background: url('/assets/money.png');
+  background-size: contain;
+  border-radius: 10px;
+}
+
+.icon-score{
+  width: 56px;
+  height: 56px;
+  background: url('/assets/score.png');
+  background-size: contain;
+  border-radius: 10px;
+}
+
+.head{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button{
+  display: inline-block;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-rose{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.105em;
+  color: #D57BB4;
+}
+
+.text-jaune{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bolder;
+  letter-spacing: 0.105em;
+  color: #F2C448;
+  border: 1px solid #F2C448;
 }

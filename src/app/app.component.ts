@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBadge } from '@angular/material/badge';
 import {ProductComponent} from './product/product.component';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

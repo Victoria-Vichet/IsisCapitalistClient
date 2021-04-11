@@ -1,14 +1,14 @@
-<div>
-  <span id="id"> {{product.id}} </span>
-  <span id="name"> {{product.name}}</span>
-  <span id="logo" (click)="startFabrication()"><img [attr.src]="server+product.logo" /></span>
-  <span id="cout"> {{product.cout}} </span>
-  <span id="croissance"> {{product.croissance}} </span>
-  <span id="revenu"> {{product.revenu}} </span>
-  <span id="vitesse"> {{product.vitesse}} </span>
-  <span id="quantite"> {{product.quantite}} </span>
-  <span id="timeleft"> {{product.timeleft}} </span>
+<div class="container">
+  <span id="id" class="text-jaune"> ID : {{product.id}} </span><br>
+  <span id="name" class="text-jaune"> PRODUIT : {{product.name}}</span> <br>
+  <span id="logo" (click)="startFabrication()"><img [attr.src]="server+product.logo" /></span> <br>
+  <span id="croissance" class="text-jaune"> CROISSANCE : {{product.croissance}} </span> <br>
+  <span id="revenu" class="text-jaune"> REVENU : {{product.revenu}} </span> <br>
+  <span id="timeleft" class="text-jaune"> TEMPS RESTANTS :{{product.timeleft}} </span> <br>
+  <span id="vitesse" class="text-jaune"> TEMPS DE PROD' : {{product.vitesse}} </span> <br>
+  <span id="quantite" class="text-jaune"> QT : {{product.quantite}} </span> <br>
+  <mat-progress-bar class="progressbar" [value]="progressBarValue">hello</mat-progress-bar>
+  <button type="button" name="buttonBuy" (click)="buyProduct()"><span id="cout" class="text-rose"> {{product.cout}}$ </span></button>
+  
 </div>
-<br>
-<mat-progress-bar class="progressbar" [value]="progressBarValue"></mat-progress-bar>
-<button type="button" name="buttonBuy" (click)="buyProduct()">Buy</button>
+  
