@@ -18,13 +18,14 @@ export class ProductComponent implements OnInit {
   price: number;
   progressBar: any;
   quantiteMax: number;
-  _value: number;
+  // _value: number;
+  pallierAPasser: number;
 
   @Input()
   set prod(value: Product) {
     this.product = value;
     this.price = this.product.cout;
-    //this._value = this.product.palliers.pallier.forEach
+    // this._value = this.product.palliers.pallier.forEach
     if (this.product && this.product.timeleft > 0) {
       this.lastupdate = Date.now();
       this.progressBar.set((this.product.vitesse - this.product.timeleft) / this.product.vitesse);
@@ -58,6 +59,8 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => { this.calcScore(); }, 100);
     this.progressBarValue = 0;
+
+    this.pallierAPasser = this.product.palliers.pallier[0].seuil;
   }
 
   startFabrication(): void{
@@ -132,12 +135,13 @@ export class ProductComponent implements OnInit {
       }
     if (this.money > coutTotal){
         this.notifyPurchase.emit(coutTotal);
-        this.product.cout = Math.round((coutProduit*(10 ** 2)))/(10 ** 2);
+        this.product.cout = Math.round((coutProduit * (10 ** 2))) / (10 ** 2);
         this.product.quantite = qtProduit;
         this.price = coutTotal;
         this.product.palliers.pallier.forEach(value => {
           if (!value.unlocked && this.product.quantite > value.seuil) {
             this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value)].unlocked = true;
+            this.pallierAPasser = this.product.palliers.pallier[this.product.palliers.pallier.indexOf(value) + 1].seuil;
             this.calcUpgrade(value);
           }
         });

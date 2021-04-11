@@ -101,6 +101,7 @@ export class AppComponent {
       this.world.products.product[m.idcible].managerUnlocked = true;
       this.service.putManager(m);
       this.popMessage('Vous avez engagé ' + m.name);
+      this.badgeManagersNew();
     }
   }
 

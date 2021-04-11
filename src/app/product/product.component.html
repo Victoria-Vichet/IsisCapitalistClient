@@ -1,6 +1,6 @@
 <div class="container">
   <span id="logo" (click)="startFabrication()"><img [attr.src]="server+product.logo" /></span> <br>
-  <span id="quantite" class="style-quantite"> {{product.quantite}}</span> <br>
+  <span id="quantite" class="style-quantite"> {{product.quantite}} / {{pallierAPasser}}</span> <br>
   <mat-progress-bar class="progressbar" [value]="progressBarValue"></mat-progress-bar>
   <button type="button" name="buttonBuy" (click)="buyProduct()"><span id="cout" class="text-rose"> ACHAT : {{product.cout}}$ </span></button> <br>
   <span id="id" class="text-jaune"> ID : {{product.id}} </span> <br>
@@ -10,4 +10,4 @@
   <span id="timeleft" class="text-jaune"> TEMPS RESTANT : {{product.timeleft}} </span> <br>
   <span id="vitesse" class="text-jaune"> TEMPS DE PROD' : {{product.vitesse}} </span> <br>
 </div>
-  
+
