@@ -63,6 +63,7 @@ export class AppComponent {
   onProductionDone(p: Product): void {
     if (this.world.totalangels > 0){
       this.world.money += (p.revenu + (this.world.totalangels * (0.2 * p.revenu)));
+      //this.world.money += p.revenu * (this.world.totalangels * this.world.angelbonus) ;
     }else{
       this.world.money += p.revenu;
     }
